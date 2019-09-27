@@ -3,8 +3,14 @@ import countries from "../countries";
 import { Link } from "react-router-dom";
 
 class CountryDetail extends React.Component {
+  componentDidMount() {
+    console.log("DETAIL MOUNT");
+  }
+  componentDidUpdate() {
+    console.log("DETAIL UPDATE");
+  }
   render() {
-    const { cca3 } = this.props.match.params;
+    const cca3 = this.props.match.params.countryCode;
 
     const country = countries.find(el => el.cca3 === cca3);
 
@@ -31,26 +37,24 @@ class CountryDetail extends React.Component {
                 <sup>2</sup>
               </td>
             </tr>
-            <tr>
-              {borders.length > 0 && (
-                <React.Fragment>
-                  <td>Borders</td>
-                  <td>
-                    <ul>
-                      {borders.map(el => {
-                        return (
-                          <li key={el.cca3}>
-                            <Link to={`/country/${el.cca3}`}>
-                              {el.name.common}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </td>
-                </React.Fragment>
-              )}
-            </tr>
+            {borders.length > 0 && (
+              <tr>
+                <td>Borders</td>
+                <td>
+                  <ul>
+                    {borders.map(el => {
+                      return (
+                        <li key={el.cca3}>
+                          <Link to={`/country/${el.cca3}`}>
+                            {el.name.common}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

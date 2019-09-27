@@ -11,6 +11,9 @@ const CountriesList = props => {
           return (
             <NavLink
               className="list-group-item list-group-item-action"
+              //   activeStyle={{
+              //     color: "red"
+              //   }}
               to={`/country/${country.cca3}`}
               key={country.cca3}
             >
