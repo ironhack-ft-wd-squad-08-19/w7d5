@@ -1,25 +1,39 @@
 import React from "react";
-import countries from "../countries";
+// import countries from "../countries";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 class CountryDetail extends React.Component {
+  state = {
+    country: null
+  };
+
+  getCountryData = () => {
+    const countryCode = this.props.match.params.countryCode;
+    // localhost:5555
+    axios.get(`/countries/${countryCode}`).then(response => {
+      const country = response.data;
+      console.log(response.data);
+      this.setState({
+        country: country
+      });
+    });
+  };
   componentDidMount() {
     console.log("DETAIL MOUNT");
+    this.getCountryData();
   }
   componentDidUpdate() {
     console.log("DETAIL UPDATE");
+    if (this.state.country.cca3 !== this.props.match.params.countryCode) {
+      this.getCountryData();
+    }
   }
-  render() {
-    const cca3 = this.props.match.params.countryCode;
 
-    const country = countries.find(el => el.cca3 === cca3);
+  render() {
+    const country = this.state.country;
 
     if (!country) return <></>;
-
-    const borders = country.borders.map(cca3 =>
-      countries.find(el => el.cca3 === cca3)
-    );
-
     return (
       <div className="col-7">
         <h1>{country.name.common}</h1>
@@ -37,12 +51,12 @@ class CountryDetail extends React.Component {
                 <sup>2</sup>
               </td>
             </tr>
-            {borders.length > 0 && (
+            {country.borders.length > 0 && (
               <tr>
                 <td>Borders</td>
                 <td>
                   <ul>
-                    {borders.map(el => {
+                    {country.borders.map(el => {
                       return (
                         <li key={el.cca3}>
                           <Link to={`/country/${el.cca3}`}>
