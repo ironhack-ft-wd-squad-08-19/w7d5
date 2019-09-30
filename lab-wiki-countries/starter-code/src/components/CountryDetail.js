@@ -25,7 +25,10 @@ class CountryDetail extends React.Component {
   }
   componentDidUpdate() {
     console.log("DETAIL UPDATE");
-    if (this.state.country.cca3 !== this.props.match.params.countryCode) {
+    if (
+      this.state.country &&
+      this.state.country.cca3 !== this.props.match.params.countryCode
+    ) {
       this.getCountryData();
     }
   }

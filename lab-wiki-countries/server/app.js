@@ -9,7 +9,7 @@ app.get("/countries", (req, res) => {
 const getCountryByCode = cca3 => countries.find(el => el.cca3 === cca3);
 
 app.get("/countries/:countryCode", (req, res) => {
-  const country = getCountryByCode(req.params.countryCode);
+  const country = { ...getCountryByCode(req.params.countryCode) };
 
   country.borders = country.borders.map(cca3 => getCountryByCode(cca3));
 

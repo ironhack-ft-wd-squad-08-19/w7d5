@@ -15,7 +15,7 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log("DID MOUNT");
-    axios.get("https://countries.tech-savvy.tech/countries").then(response => {
+    axios.get("/countries").then(response => {
       console.log(response.data);
       this.setState({
         countries: response.data
